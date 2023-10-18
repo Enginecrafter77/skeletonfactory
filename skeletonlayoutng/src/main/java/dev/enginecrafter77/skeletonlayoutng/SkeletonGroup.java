@@ -53,7 +53,7 @@ public class SkeletonGroup implements Skeleton {
 	{
 		this.active = false;
 		for(Skeleton skeleton : this.skeletons)
-			skeleton.showSkeleton();
+			skeleton.hideSkeleton();
 	}
 
 	public static SkeletonGroup create(List<Skeleton> skeletons)

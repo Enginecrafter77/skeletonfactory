@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
 
+import dev.enginecrafter77.skeletonlayoutng.demo.R;
 import dev.enginecrafter77.skeletonlayoutng.demo.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
 		Skeleton textSkeleton = SkeletonLayoutUtils.createSkeleton(this.binding.textField);
 		Skeleton groupSkeleton = this.binding.skeletonLayout;
+		Skeleton list = SkeletonLayoutUtils.applySkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
 
-		this.skeleton = SkeletonGroup.create(textSkeleton, groupSkeleton);
+		this.skeleton = SkeletonGroup.create(textSkeleton, groupSkeleton, list);
 		this.skeleton.hideSkeleton();
 	}
 

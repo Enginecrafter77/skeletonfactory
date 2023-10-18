@@ -2,7 +2,10 @@ package dev.enginecrafter77.skeletonlayoutng;
 
 import android.view.View;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.UiThread;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SkeletonLayoutUtils {
 	public static DetachableSkeleton createSkeleton(View view)
@@ -11,6 +14,13 @@ public class SkeletonLayoutUtils {
 		overlay.setStyle(SkeletonStyle.fromContext(view.getContext()));
 		overlay.install();
 		return overlay;
+	}
+
+	public static Skeleton applySkeleton(RecyclerView recyclerView, int count, @LayoutRes int itemLayout, @IdRes int... itemSkeletons)
+	{
+		SkeletonAdapter adapter = new SkeletonAdapter(itemLayout, itemSkeletons);
+		adapter.setItemCount(count);
+		return new RecyclerViewSkeleton(recyclerView, adapter);
 	}
 
 	private static class SkeletonOverlay extends SkeletonDrawable implements DetachableSkeleton

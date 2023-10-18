@@ -82,7 +82,7 @@ public class SkeletonAdapter extends RecyclerView.Adapter<SkeletonAdapter.Skelet
 			for(@IdRes int id : skeletonItems)
 			{
 				View view = itemView.findViewById(id);
-				Skeleton skeleton = SkeletonLayoutUtils.createSkeleton(view);
+				Skeleton skeleton = SkeletonFactory.createSkeleton(view);
 				skeletons.add(skeleton);
 			}
 			this.skeletonGroup = SkeletonGroup.create(skeletons);

@@ -22,7 +22,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SkeletonLayoutUtils {
+public class SkeletonFactory {
 	public static DetachableSkeleton createSkeleton(View view)
 	{
 		SkeletonOverlay overlay = new SkeletonOverlay(view);

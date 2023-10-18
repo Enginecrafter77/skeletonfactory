@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
 
 		this.binding.skeletonSwitch.setOnCheckedChangeListener(this::onToggleSwitched);
 
-		Skeleton textSkeleton = SkeletonLayoutUtils.createSkeleton(this.binding.textField);
+		Skeleton textSkeleton = SkeletonFactory.createSkeleton(this.binding.textField);
 		Skeleton groupSkeleton = this.binding.skeletonLayout;
-		Skeleton list = SkeletonLayoutUtils.applySkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
+		Skeleton list = SkeletonFactory.applySkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
 
 		this.skeleton = SkeletonGroup.create(textSkeleton, groupSkeleton, list);
 		this.skeleton.hideSkeleton();

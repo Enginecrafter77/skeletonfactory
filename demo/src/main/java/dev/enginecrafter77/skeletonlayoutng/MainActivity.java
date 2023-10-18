@@ -12,7 +12,7 @@ import dev.enginecrafter77.skeletonlayoutng.demo.databinding.ActivityMainBinding
 public class MainActivity extends AppCompatActivity {
 	private ActivityMainBinding binding;
 
-	private Skeleton textSkeleton;
+	private Skeleton skeleton;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -23,8 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
 		this.binding.skeletonSwitch.setOnCheckedChangeListener(this::onToggleSwitched);
 
-		this.textSkeleton = SkeletonLayoutUtils.createSkeleton(this.binding.textField);
-		this.textSkeleton.hideSkeleton();
+		Skeleton textSkeleton = SkeletonLayoutUtils.createSkeleton(this.binding.textField);
+		Skeleton groupSkeleton = this.binding.skeletonLayout;
+
+		this.skeleton = SkeletonGroup.create(textSkeleton, groupSkeleton);
+		this.skeleton.hideSkeleton();
 	}
 
 	@UiThread
@@ -32,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
 	{
 		if(state)
 		{
-			this.textSkeleton.showSkeleton();
+			this.skeleton.showSkeleton();
 		}
 		else
 		{
-			this.textSkeleton.hideSkeleton();
+			this.skeleton.hideSkeleton();
 		}
 	}
 }

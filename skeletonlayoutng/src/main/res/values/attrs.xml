@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SkeletonLayout">
+        <attr name="skeletonMaskColor" format="color"/>
+        <attr name="skeletonShimmerColor" format="color"/>
+        <attr name="skeletonShimmerAngle" format="float"/>
+        <attr name="skeletonBorderRadius" format="dimension"/>
+    </declare-styleable>
+</resources>

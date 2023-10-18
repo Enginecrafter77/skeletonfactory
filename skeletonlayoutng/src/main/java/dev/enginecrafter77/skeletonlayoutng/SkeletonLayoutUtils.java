@@ -8,6 +8,7 @@ public class SkeletonLayoutUtils {
 	public static DetachableSkeleton createSkeleton(View view)
 	{
 		SkeletonOverlay overlay = new SkeletonOverlay(view);
+		overlay.setStyle(SkeletonStyle.fromContext(view.getContext()));
 		overlay.install();
 		return overlay;
 	}

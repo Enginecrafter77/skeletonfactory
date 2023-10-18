@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.animation.LinearInterpolator;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -27,23 +26,23 @@ public class SkeletonDrawable extends Drawable implements Skeleton {
 	private final RectF paintingArea;
 	private final Handler handler;
 
-	private int fillColor;
-	private int shimmerColor;
+	private final Matrix shaderGradientRotationMatrix;
+	private final RectF shaderGradientRectangle;
 
-	private float borderRadius;
+	private SkeletonStyle style;
 
 	private boolean active;
 
 	public SkeletonDrawable()
 	{
 		this.handler = new Handler(Looper.getMainLooper());
+		this.shaderGradientRectangle = new RectF();
+		this.shaderGradientRotationMatrix = new Matrix();
 		this.paintingArea = new RectF();
 		this.shimmerBoundMatrix = new Matrix();
 		this.shimmerOutMatrix = new Matrix();
-		this.borderRadius = 8F;
+		this.style = SkeletonStyle.getDefault();
 		this.active = false;
-		this.fillColor = 0xFF888888;
-		this.shimmerColor = 0xFF999999;
 
 		this.shimmerAnimator = ValueAnimator.ofFloat(-1.75F, 1.75F);
 		this.shimmerAnimator.setInterpolator(new LinearInterpolator());
@@ -64,32 +63,27 @@ public class SkeletonDrawable extends Drawable implements Skeleton {
 		this.invalidateSelf();
 	}
 
-	public void setBorderRadius(float borderRadius)
+	public SkeletonStyle getStyle()
 	{
-		this.borderRadius = borderRadius;
+		return this.style;
+	}
+
+	public void setStyle(@NonNull SkeletonStyle style)
+	{
+		this.style = style;
+		this.recreateShader();
 		this.invalidateSelf();
-	}
-
-	public float getBorderRadius()
-	{
-		return this.borderRadius;
-	}
-
-	public void setFillColor(@ColorInt int color)
-	{
-		this.fillColor = color;
-		this.recreateShader();
-	}
-
-	public void setShimmerColor(@ColorInt int shimmerColor)
-	{
-		this.shimmerColor = shimmerColor;
-		this.recreateShader();
 	}
 
 	protected void recreateShader()
 	{
-		Shader shimmerShader = new LinearGradient(0F, 0.4F, 1F, 0.6F, new int[] {this.fillColor, this.shimmerColor, this.fillColor}, null, Shader.TileMode.CLAMP);
+		this.shaderGradientRectangle.set(0F, 0.5F, 1F, 0.5F);
+
+		this.shaderGradientRotationMatrix.reset();
+		this.shaderGradientRotationMatrix.preRotate(-this.style.shimmerAngle);
+		this.shaderGradientRotationMatrix.mapRect(this.shaderGradientRectangle);
+
+		Shader shimmerShader = new LinearGradient(this.shaderGradientRectangle.left, this.shaderGradientRectangle.top, this.shaderGradientRectangle.right, this.shaderGradientRectangle.bottom, new int[] {this.style.fillColor, this.style.shimmerColor, this.style.fillColor}, null, Shader.TileMode.CLAMP);
 		this.shimmerPaint.setShader(shimmerShader);
 		this.invalidateSelf();
 	}
@@ -118,7 +112,7 @@ public class SkeletonDrawable extends Drawable implements Skeleton {
 		this.shimmerOutMatrix.postTranslate(shift, 0F);
 		this.shimmerPaint.getShader().setLocalMatrix(this.shimmerOutMatrix);
 
-		canvas.drawRoundRect(this.paintingArea, this.borderRadius, this.borderRadius, this.shimmerPaint);
+		canvas.drawRoundRect(this.paintingArea, this.style.borderRadius, this.style.borderRadius, this.shimmerPaint);
 	}
 
 	@Override

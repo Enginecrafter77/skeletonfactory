@@ -21,6 +21,8 @@ public class SkeletonLayout extends FrameLayout implements Skeleton {
 		super(context, attrs);
 		this.skeletonDrawable = new SkeletonDrawable();
 		this.getOverlay().add(this.skeletonDrawable);
+
+		this.skeletonDrawable.setStyle(SkeletonStyle.fromContext(context));
 	}
 
 	@Override

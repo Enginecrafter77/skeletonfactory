@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'com.github.hierynomus.license'
+    id 'fr.brouillard.oss.gradle.jgitver'
+    id 'maven-publish'
 }
 
 android {
@@ -29,6 +31,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -50,5 +58,30 @@ license {
 
     mapping {
         java='SLASHSTAR_STYLE'
+    }
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'dev.enginecrafter77.skeletonlayoutng'
+            artifactId = 'skeletonlayoutng'
+            version = '0.0.0'
+
+            afterEvaluate {
+                version = project.version
+                from components.release
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'EC77Maven'
+            url = 'https://maven.enginecrafter77.dev/general'
+            credentials {
+                username System.getenv("EC77MAVEN_USERNAME") ?: ""
+                password System.getenv("EC77MAVEN_PASSWORD") ?: ""
+            }
+        }
     }
 }

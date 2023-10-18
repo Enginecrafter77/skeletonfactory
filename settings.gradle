@@ -8,6 +8,7 @@ pluginManagement {
         id 'com.android.application' version '8.1.2'
         id 'com.android.library' version '8.1.2'
         id 'com.github.hierynomus.license' version '0.16.1'
+        id 'fr.brouillard.oss.gradle.jgitver' version '0.9.1'
     }
 }
 dependencyResolutionManagement {

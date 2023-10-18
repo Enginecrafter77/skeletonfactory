@@ -19,7 +19,7 @@ public class SkeletonLayout extends FrameLayout implements Skeleton {
 	public SkeletonLayout(@NonNull Context context, @Nullable AttributeSet attrs)
 	{
 		super(context, attrs);
-		this.skeletonDrawable = new SkeletonDrawable(true);
+		this.skeletonDrawable = new SkeletonDrawable();
 		this.getOverlay().add(this.skeletonDrawable);
 	}
 

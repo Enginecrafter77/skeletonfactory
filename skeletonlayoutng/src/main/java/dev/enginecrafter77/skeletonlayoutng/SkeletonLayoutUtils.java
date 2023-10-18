@@ -7,7 +7,7 @@ import androidx.annotation.UiThread;
 public class SkeletonLayoutUtils {
 	public static DetachableSkeleton createSkeleton(View view)
 	{
-		SkeletonOverlay overlay = new SkeletonOverlay(view, true);
+		SkeletonOverlay overlay = new SkeletonOverlay(view);
 		overlay.install();
 		return overlay;
 	}
@@ -18,9 +18,9 @@ public class SkeletonLayoutUtils {
 
 		private final View view;
 
-		public SkeletonOverlay(View view, boolean active)
+		public SkeletonOverlay(View view)
 		{
-			super(active);
+			super();
 			this.view = view;
 			this.onLayoutChangeListener = this::onViewLayoutChange;
 		}

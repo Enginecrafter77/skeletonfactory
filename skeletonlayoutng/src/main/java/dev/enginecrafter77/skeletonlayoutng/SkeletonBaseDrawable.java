@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
@@ -39,12 +40,11 @@ public class SkeletonBaseDrawable extends Drawable {
 	}
 
 	@Override
-	public void setBounds(int left, int top, int right, int bottom)
+	protected void onBoundsChange(@NonNull Rect bounds)
 	{
-		super.setBounds(left, top, right, bottom);
-		this.paintingArea.set(left, top, right, bottom);
+		super.onBoundsChange(bounds);
+		this.paintingArea.set(bounds);
 		this.paintingArea.offsetTo(0, 0);
-		this.invalidateSelf();
 	}
 
 	@Override

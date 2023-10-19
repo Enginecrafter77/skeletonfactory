@@ -16,6 +16,9 @@
  */
 package dev.enginecrafter77.skeletonlayoutng;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,12 +26,15 @@ public class RecyclerViewSkeleton implements Skeleton {
 	private final RecyclerView view;
 	private final SkeletonAdapter skeletonAdapter;
 
+	private final Handler handler;
+
 	@Nullable
 	private RecyclerView.Adapter<?> suppressed;
 	private boolean active;
 
 	public RecyclerViewSkeleton(RecyclerView view, SkeletonAdapter adapter)
 	{
+		this.handler = new Handler(Looper.getMainLooper());
 		this.view = view;
 		this.skeletonAdapter = adapter;
 		this.suppressed = null;
@@ -44,22 +50,26 @@ public class RecyclerViewSkeleton implements Skeleton {
 	@Override
 	public void showSkeleton()
 	{
-		if(this.active)
-			return;
+		this.handler.post(() -> {
+			if(this.active)
+				return;
 
-		this.suppressed = this.view.getAdapter();
-		this.view.setAdapter(this.skeletonAdapter);
-		this.active = true;
+			this.suppressed = this.view.getAdapter();
+			this.view.setAdapter(this.skeletonAdapter);
+			this.active = true;
+		});
 	}
 
 	@Override
 	public void hideSkeleton()
 	{
-		if(!this.active)
-			return;
+		this.handler.post(() -> {
+			if(!this.active)
+				return;
 
-		this.view.setAdapter(this.suppressed);
-		this.suppressed = null;
-		this.active = false;
+			this.view.setAdapter(this.suppressed);
+			this.suppressed = null;
+			this.active = false;
+		});
 	}
 }

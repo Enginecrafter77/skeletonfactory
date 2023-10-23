@@ -4,7 +4,7 @@ import android.view.View;
 
 import androidx.annotation.UiThread;
 
-class SkeletonOverlay extends SkeletonDrawable implements DetachableSkeleton {
+public class SkeletonOverlay extends SkeletonDrawable implements DetachableSkeleton {
 	private final View.OnLayoutChangeListener onLayoutChangeListener;
 
 	private final View view;

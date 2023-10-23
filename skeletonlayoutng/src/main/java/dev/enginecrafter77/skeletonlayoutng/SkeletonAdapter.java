@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkeletonAdapter extends RecyclerView.Adapter<SkeletonAdapter.SkeletonItem> {
+	private final SkeletonFactory skeletonFactory;
+
 	@LayoutRes
 	private final int itemLayout;
 
@@ -38,8 +40,9 @@ public class SkeletonAdapter extends RecyclerView.Adapter<SkeletonAdapter.Skelet
 
 	private int itemCount;
 
-	public SkeletonAdapter(@LayoutRes int itemLayout, @IdRes int[] itemSkeletons)
+	public SkeletonAdapter(@LayoutRes int itemLayout, @IdRes int[] itemSkeletons, SkeletonFactory skeletonFactory)
 	{
+		this.skeletonFactory = skeletonFactory;
 		this.itemLayout = itemLayout;
 		this.itemSkeletons = itemSkeletons;
 		this.itemCount = 3;
@@ -57,7 +60,7 @@ public class SkeletonAdapter extends RecyclerView.Adapter<SkeletonAdapter.Skelet
 	public SkeletonAdapter.SkeletonItem onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
 	{
 		View root = LayoutInflater.from(parent.getContext()).inflate(this.itemLayout, parent, false);
-		return new SkeletonItem(root, this.itemSkeletons);
+		return new SkeletonItem(root, this.itemSkeletons, this.skeletonFactory);
 	}
 
 	@Override
@@ -75,14 +78,14 @@ public class SkeletonAdapter extends RecyclerView.Adapter<SkeletonAdapter.Skelet
 	public static class SkeletonItem extends RecyclerView.ViewHolder {
 		private final SkeletonGroup skeletonGroup;
 
-		public SkeletonItem(@NonNull View itemView, @IdRes int[] skeletonItems)
+		public SkeletonItem(@NonNull View itemView, @IdRes int[] skeletonItems, SkeletonFactory factory)
 		{
 			super(itemView);
 			List<Skeleton> skeletons = new ArrayList<Skeleton>(skeletonItems.length);
 			for(@IdRes int id : skeletonItems)
 			{
 				View view = itemView.findViewById(id);
-				Skeleton skeleton = SkeletonFactory.createSkeleton(view);
+				Skeleton skeleton = factory.createSkeleton(view);
 				skeletons.add(skeleton);
 			}
 			this.skeletonGroup = SkeletonGroup.create(skeletons);

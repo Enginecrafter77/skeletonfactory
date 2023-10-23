@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
 		TestAdapter adapter = new TestAdapter(10);
 		this.binding.testList.setAdapter(adapter);
 
-		Skeleton textSkeleton = SkeletonFactory.createSkeleton(this.binding.textField);
+		Skeleton textSkeleton = DefaultSkeletonFactory.createSkeleton(this.binding.textField);
 		Skeleton groupSkeleton = this.binding.skeletonLayout;
-		Skeleton list = SkeletonFactory.createRecyclerViewSkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
+		Skeleton list = DefaultSkeletonFactory.createRecyclerViewSkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
 
 		this.skeleton = SkeletonGroup.create(textSkeleton, groupSkeleton, list);
 		this.skeleton.hideSkeleton();

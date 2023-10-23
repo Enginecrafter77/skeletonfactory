@@ -38,20 +38,20 @@ public class MainActivity extends AppCompatActivity {
 		this.binding.testList.setAdapter(adapter);
 
 		// Create a skeleton covering single view
-		Skeleton textSkeleton = SkeletonFactory.createSkeleton(this.binding.textField);
+		Skeleton textSkeleton = DefaultSkeletonFactory.createSkeleton(this.binding.textField);
 		
 		// When using SkeletonLayout as parent (inherits from FrameLayout), you can bind to that directly
 		Skeleton groupSkeleton = this.binding.skeletonLayout;
 		
 		// Create a skeleton in RecyclerView.
         // You need to supply the RecyclerView instance, then the number of parameters, and the item layout resource followed by IDs of items you wish to become skeletons.
-		Skeleton list = SkeletonFactory.createRecyclerViewSkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
+		Skeleton list = DefaultSkeletonFactory.createRecyclerViewSkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
 
 		// Group skeletons together using SkeletonGroup
 		this.skeleton = SkeletonGroup.create(textSkeleton, groupSkeleton, list);
 		
 		// Alternatively, you can create SkeletonGroup from Views directly (for convenience)
-        //SkeletonFactory.createSkeletonGroup(view1, view2, view3, ...);
+        //DefaultSkeletonFactory.createSkeletonGroup(view1, view2, view3, ...);
         
         // At the time of creation, the state of skeletons is undefined, so we explicitly hide them
 		this.skeleton.hideSkeleton();

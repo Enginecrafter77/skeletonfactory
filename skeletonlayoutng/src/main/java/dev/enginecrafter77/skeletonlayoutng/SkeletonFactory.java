@@ -16,33 +16,61 @@
  */
 package dev.enginecrafter77.skeletonlayoutng;
 
+import android.content.Context;
 import android.view.View;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SkeletonFactory {
-	public static DetachableSkeleton createSkeleton(View view)
+	@Nullable
+	private final SkeletonStyle style;
+
+	public SkeletonFactory(@Nullable SkeletonStyle style)
+	{
+		this.style = style;
+	}
+
+	protected SkeletonStyle getSkeletonStyleInContext(Context context)
+	{
+		if(this.style != null)
+			return this.style;
+		return SkeletonStyle.fromContext(context);
+	}
+
+	public DetachableSkeleton createSkeleton(View view)
 	{
 		SkeletonOverlay overlay = new SkeletonOverlay(view);
-		overlay.setStyle(SkeletonStyle.fromContext(view.getContext()));
+		overlay.setStyle(this.getSkeletonStyleInContext(view.getContext()));
 		overlay.install();
 		return overlay;
 	}
 
-	public static Skeleton createSkeletonGroup(View... views)
+	public Skeleton createSkeletonGroup(View... views)
 	{
-		return SkeletonGroup.create(Stream.of(views).map(SkeletonFactory::createSkeleton).collect(Collectors.toSet()));
+		return SkeletonGroup.create(Stream.of(views).map(this::createSkeleton).collect(Collectors.toSet()));
 	}
 
-	public static Skeleton createRecyclerViewSkeleton(RecyclerView recyclerView, int count, @LayoutRes int itemLayout, @IdRes int... itemSkeletons)
+	public Skeleton createRecyclerViewSkeleton(RecyclerView recyclerView, int count, @LayoutRes int itemLayout, @IdRes int... itemSkeletons)
 	{
-		SkeletonAdapter adapter = new SkeletonAdapter(itemLayout, itemSkeletons);
+		SkeletonAdapter adapter = new SkeletonAdapter(itemLayout, itemSkeletons, this);
 		adapter.setItemCount(count);
 		return new RecyclerViewSkeleton(recyclerView, adapter);
+	}
+
+	private static final SkeletonFactory DEFAULT = new SkeletonFactory(null);
+	public static SkeletonFactory getDefault()
+	{
+		return SkeletonFactory.DEFAULT;
+	}
+
+	public static SkeletonFactory withStyle(SkeletonStyle style)
+	{
+		return new SkeletonFactory(style);
 	}
 }

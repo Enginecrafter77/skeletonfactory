@@ -22,6 +22,9 @@ import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class SkeletonFactory {
 	public static DetachableSkeleton createSkeleton(View view)
 	{
@@ -29,6 +32,11 @@ public class SkeletonFactory {
 		overlay.setStyle(SkeletonStyle.fromContext(view.getContext()));
 		overlay.install();
 		return overlay;
+	}
+
+	public static Skeleton createSkeletonGroup(View... views)
+	{
+		return SkeletonGroup.create(Stream.of(views).map(SkeletonFactory::createSkeleton).collect(Collectors.toSet()));
 	}
 
 	public static Skeleton applySkeleton(RecyclerView recyclerView, int count, @LayoutRes int itemLayout, @IdRes int... itemSkeletons)

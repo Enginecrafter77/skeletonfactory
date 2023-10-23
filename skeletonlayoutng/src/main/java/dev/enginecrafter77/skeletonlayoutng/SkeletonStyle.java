@@ -26,7 +26,7 @@ import androidx.annotation.Nullable;
 import java.util.Objects;
 
 public class SkeletonStyle {
-	public static final SkeletonStyle DEFAULT = new SkeletonStyle(0xFFE0E0E0, 0xFFD5D5D5, 5F, 8F);
+	public static final SkeletonStyle DEFAULT = new SkeletonStyle(0xFFE0E0E0, 0xFFD5D5D5, 5F, 8F, 1500);
 
 	@ColorInt
 	public final int fillColor;
@@ -38,18 +38,21 @@ public class SkeletonStyle {
 
 	public final float borderRadius;
 
-	public SkeletonStyle(int fillColor, int shimmerColor, float shimmerAngle, float borderRadius)
+	public final int shimmerPeriodMs;
+
+	public SkeletonStyle(int fillColor, int shimmerColor, float shimmerAngle, float borderRadius, int shimmerPeriodMs)
 	{
 		this.borderRadius = borderRadius;
 		this.fillColor = fillColor;
 		this.shimmerColor = shimmerColor;
 		this.shimmerAngle = shimmerAngle;
+		this.shimmerPeriodMs = shimmerPeriodMs;
 	}
 
 	@Override
 	public int hashCode()
 	{
-		return Objects.hash(this.fillColor, this.shimmerColor, this.shimmerAngle);
+		return Objects.hash(this.fillColor, this.shimmerColor, this.shimmerAngle, this.borderRadius, this.shimmerPeriodMs);
 	}
 
 	@Override
@@ -58,7 +61,11 @@ public class SkeletonStyle {
 		if(!(obj instanceof SkeletonStyle))
 			return false;
 		SkeletonStyle other = (SkeletonStyle)obj;
-		return this.fillColor == other.fillColor && this.shimmerColor == other.shimmerColor && this.shimmerAngle == other.shimmerAngle;
+		return this.fillColor == other.fillColor &&
+				this.shimmerColor == other.shimmerColor &&
+				this.shimmerAngle == other.shimmerAngle &&
+				this.borderRadius == other.borderRadius &&
+				this.shimmerPeriodMs == other.shimmerPeriodMs;
 	}
 
 	public SkeletonStyleBuilder derive()
@@ -86,6 +93,7 @@ public class SkeletonStyle {
 		builder.withShimmerColor(attrs.getColor(R.styleable.SkeletonLayout_skeletonShimmerColor, style.shimmerColor));
 		builder.withShimmerAngle(attrs.getFloat(R.styleable.SkeletonLayout_skeletonShimmerAngle, style.shimmerAngle));
 		builder.withBorderRadius(attrs.getDimensionPixelSize(R.styleable.SkeletonLayout_skeletonBorderRadius, (int)style.borderRadius));
+		builder.withShimmerPeriodMs(attrs.getInteger(R.styleable.SkeletonLayout_skeletonShimmerPeriodMs, style.shimmerPeriodMs));
 		attrs.recycle();
 
 		return builder.build();
@@ -97,6 +105,7 @@ public class SkeletonStyle {
 		private int shimmerColor;
 		private float shimmerAngle;
 		private float borderRadius;
+		private int shimmerPeriodMs;
 
 		public SkeletonStyleBuilder(SkeletonStyle from)
 		{
@@ -104,6 +113,7 @@ public class SkeletonStyle {
 			this.shimmerColor = from.shimmerColor;
 			this.shimmerAngle = from.shimmerAngle;
 			this.borderRadius = from.borderRadius;
+			this.shimmerPeriodMs = from.shimmerPeriodMs;
 		}
 
 		public SkeletonStyleBuilder withFillColor(@ColorInt int fillColor)
@@ -126,13 +136,23 @@ public class SkeletonStyle {
 
 		public SkeletonStyleBuilder withBorderRadius(float borderRadius)
 		{
+			if(borderRadius < 0)
+				throw new IllegalArgumentException("Border radius must be >= 0");
 			this.borderRadius = borderRadius;
+			return this;
+		}
+
+		public SkeletonStyleBuilder withShimmerPeriodMs(int shimmerPeriodMs)
+		{
+			if(shimmerPeriodMs <= 0)
+				throw new IllegalArgumentException("Shimmer period must be >= 1");
+			this.shimmerPeriodMs = shimmerPeriodMs;
 			return this;
 		}
 
 		public SkeletonStyle build()
 		{
-			return new SkeletonStyle(this.fillColor, this.shimmerColor, this.shimmerAngle, this.borderRadius);
+			return new SkeletonStyle(this.fillColor, this.shimmerColor, this.shimmerAngle, this.borderRadius, this.shimmerPeriodMs);
 		}
 	}
 }

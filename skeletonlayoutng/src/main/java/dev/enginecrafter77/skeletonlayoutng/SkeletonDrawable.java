@@ -64,14 +64,14 @@ public class SkeletonDrawable extends Drawable implements Skeleton {
 		this.shimmerAnimator.setInterpolator(new LinearInterpolator());
 		this.shimmerAnimator.setRepeatMode(ValueAnimator.RESTART);
 		this.shimmerAnimator.setRepeatCount(ValueAnimator.INFINITE);
-		this.shimmerAnimator.setDuration(1500);
+		this.shimmerAnimator.setDuration(this.style.shimmerPeriodMs);
 		this.shimmerAnimator.addUpdateListener(this::onAnimationUpdate);
 
 		this.shimmerPaint = new Paint();
 		this.shimmerPaint.setAntiAlias(true);
 		this.shimmerPaint.setColor(Color.BLACK);
 
-		this.recreateShader();
+		this.setStyle(SkeletonStyle.DEFAULT);
 	}
 
 	protected void onAnimationUpdate(@NonNull ValueAnimator animator)
@@ -87,6 +87,7 @@ public class SkeletonDrawable extends Drawable implements Skeleton {
 	public void setStyle(@NonNull SkeletonStyle style)
 	{
 		this.style = style;
+		this.shimmerAnimator.setDuration(style.shimmerPeriodMs);
 		this.recreateShader();
 		this.invalidateSelf();
 	}

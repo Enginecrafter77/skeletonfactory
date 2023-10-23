@@ -39,7 +39,7 @@ public class SkeletonFactory {
 		return SkeletonGroup.create(Stream.of(views).map(SkeletonFactory::createSkeleton).collect(Collectors.toSet()));
 	}
 
-	public static Skeleton applySkeleton(RecyclerView recyclerView, int count, @LayoutRes int itemLayout, @IdRes int... itemSkeletons)
+	public static Skeleton createRecyclerViewSkeleton(RecyclerView recyclerView, int count, @LayoutRes int itemLayout, @IdRes int... itemSkeletons)
 	{
 		SkeletonAdapter adapter = new SkeletonAdapter(itemLayout, itemSkeletons);
 		adapter.setItemCount(count);

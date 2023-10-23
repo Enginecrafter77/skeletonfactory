@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 		Skeleton textSkeleton = SkeletonFactory.createSkeleton(this.binding.textField);
 		Skeleton groupSkeleton = this.binding.skeletonLayout;
-		Skeleton list = SkeletonFactory.applySkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
+		Skeleton list = SkeletonFactory.createRecyclerViewSkeleton(this.binding.testList, 3, R.layout.test_item, R.id.icon, R.id.item_list);
 
 		this.skeleton = SkeletonGroup.create(textSkeleton, groupSkeleton, list);
 		this.skeleton.hideSkeleton();

@@ -16,15 +16,14 @@
  */
 package dev.enginecrafter77.skeletonlayoutng;
 
-import java.util.Arrays;
-import java.util.List;
+import com.google.common.collect.ImmutableSet;
 
 public class SkeletonGroup implements Skeleton {
-	private final List<Skeleton> skeletons;
+	private final ImmutableSet<Skeleton> skeletons;
 
 	private boolean active;
 
-	protected SkeletonGroup(List<Skeleton> skeletons)
+	protected SkeletonGroup(ImmutableSet<Skeleton> skeletons)
 	{
 		this.skeletons = skeletons;
 		this.active = false;
@@ -72,15 +71,15 @@ public class SkeletonGroup implements Skeleton {
 			skeleton.hideSkeleton();
 	}
 
-	public static SkeletonGroup create(List<Skeleton> skeletons)
+	public static SkeletonGroup create(Iterable<Skeleton> skeletons)
 	{
-		SkeletonGroup group = new SkeletonGroup(skeletons);
+		SkeletonGroup group = new SkeletonGroup(ImmutableSet.copyOf(skeletons));
 		group.sync();
 		return group;
 	}
 
 	public static SkeletonGroup create(Skeleton... skeletons)
 	{
-		return SkeletonGroup.create(Arrays.asList(skeletons));
+		return SkeletonGroup.create(ImmutableSet.copyOf(skeletons));
 	}
 }

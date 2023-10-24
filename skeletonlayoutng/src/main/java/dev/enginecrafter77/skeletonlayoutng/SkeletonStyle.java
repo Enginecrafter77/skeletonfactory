@@ -25,19 +25,35 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
+/**
+ * SkeletonStyle is an immutable object that controls the appearance of {@link SkeletonDrawable}.
+ * @author Enginecrafter77
+ */
 public class SkeletonStyle {
 	public static final SkeletonStyle DEFAULT = new SkeletonStyle(0xFFE0E0E0, 0xFFD5D5D5, 5F, 8F, 1500);
 
+	/** The color the strip will be filled with */
 	@ColorInt
 	public final int fillColor;
 
+	/** The color of the running shimmer. Should normally be only slightly different from {@link #fillColor} */
 	@ColorInt
 	public final int shimmerColor;
 
+	/**
+	 * The angle (in degrees) the shimmer should be tilted in counter-clockwise direction.
+	 * Angle o 0deg describes perfect left-to-right shimmer, 90deg makes it go from bottom to top.
+	 * It is not advised to use angles in excess of 45deg as that can produce undesirable visual effects.
+	 */
 	public final float shimmerAngle;
 
+	/** The radius of skeleton strip borders in partial pixels. */
 	public final float borderRadius;
 
+	/**
+	 * The duration of 1 iteration of the shimmer animation.
+	 * The shimmer animation will spend 2/7 of that time running, and the rest dwelling.
+	 */
 	public final int shimmerPeriodMs;
 
 	public SkeletonStyle(int fillColor, int shimmerColor, float shimmerAngle, float borderRadius, int shimmerPeriodMs)

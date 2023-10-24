@@ -29,6 +29,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SkeletonAdapter is a {@link RecyclerView.Adapter} implementation that displays skeleton children in the RecyclerView.
+ * @author Enginecrafter77
+ */
 public class SkeletonAdapter extends RecyclerView.Adapter<SkeletonAdapter.SkeletonItem> {
 	private final SkeletonFactory skeletonFactory;
 
@@ -40,6 +44,12 @@ public class SkeletonAdapter extends RecyclerView.Adapter<SkeletonAdapter.Skelet
 
 	private int itemCount;
 
+	/**
+	 * Create a SkeletonAdapter using the given parameters.
+	 * @param itemLayout The layout resource for children
+	 * @param itemSkeletons The item IDs in the child layout that should be made into skeletons
+	 * @param skeletonFactory The skeleton factory used to make the child skeletons
+	 */
 	public SkeletonAdapter(@LayoutRes int itemLayout, @IdRes int[] itemSkeletons, SkeletonFactory skeletonFactory)
 	{
 		this.skeletonFactory = skeletonFactory;

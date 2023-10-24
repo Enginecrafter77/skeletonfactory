@@ -27,6 +27,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * <p>SkeletonFactory is a class that creates skeletons for various elements (maily Views).</p>
+ *
+ * <p>
+ *     The main goal of an abstract SkeletonFactory is that it can be supplied with user-specified {@link SkeletonStyle},
+ *     which is subsequently passed down onto the children (as is case in {@link SkeletonAdapter} for example).
+ * </p>
+ * @author Enginecrafter77
+ */
 public class SkeletonFactory {
 	@Nullable
 	private final SkeletonStyle style;

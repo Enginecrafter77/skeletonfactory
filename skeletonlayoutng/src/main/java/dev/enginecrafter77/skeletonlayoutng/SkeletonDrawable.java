@@ -34,6 +34,18 @@ import android.view.animation.LinearInterpolator;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * <p>SkeletonDrawable is the main means of displaying skeletons.</p>
+ *
+ * <p>
+ *     SkeletonDrawable takes the form of a simple strip with a running shimmer animation covering the whole element bounds.
+ * </p>
+ *
+ * <p>
+ *     SkeletonDrawable can be configured by using {@link #setStyle(SkeletonStyle)}.
+ * </p>
+ * @author Enginecrafter77
+ */
 public class SkeletonDrawable extends Drawable implements Skeleton {
 	private final Matrix shimmerBoundMatrix;
 	private final Matrix shimmerOutMatrix;

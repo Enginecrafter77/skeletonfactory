@@ -16,6 +16,21 @@
  */
 package dev.enginecrafter77.skeletonlayoutng;
 
+/**
+ * DetachableSkeleton is a simple extension to {@link Skeleton} allowing it to be completely
+ * uninstalled from the associated element.
+ * @author Enginecrafter77
+ */
 public interface DetachableSkeleton extends Skeleton {
+	/**
+	 * <p>Detaches the skeleton from the associated element.</p>
+	 *
+	 * <p>
+	 *     Upon call to this method, {@link #showSkeleton()} and {@link #hideSkeleton()} methods
+	 *     should become NO-OP, and the result of {@link #isActive()} becomes undefined.
+	 * </p>
+	 *
+	 * <p>This method is idempotent. Subsequent calls to this method should be NO-OP.</p>
+	 */
 	public void detachSkeleton();
 }

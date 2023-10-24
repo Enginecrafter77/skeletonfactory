@@ -24,6 +24,20 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * <p>SkeletonLayout is a simple {@link FrameLayout} with an implicitly constructed {@link Skeleton}.</p>
+ *
+ * <p>
+ *     SkeletonLayout can be used as an XML-explicit declaration of skeleton covering a view. This instance
+ *     can then directly be used to control the skeleton covering the view.
+ * </p>
+ *
+ * <p>
+ *     Upon construction, the skeleton state is undefined. Therefore, it is advised to call either
+ *     {@link #showSkeleton()} or {@link #hideSkeleton()} before the view gets displayed.
+ * </p>
+ * @author Enginecrafter77
+ */
 public class SkeletonLayout extends FrameLayout implements Skeleton {
 	private final SkeletonDrawable skeletonDrawable;
 

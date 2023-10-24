@@ -6,6 +6,12 @@ import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * A static facade for {@link SkeletonFactory#getDefault()}.
+ * Any static call {@code DefaultSkeletonFactory.XYZ()} is equivalent to calling {@code SkeletonFactory.getDefault().XYZ()}.
+ * Mostly used for convenience.
+ * @author Enginecrafter77
+ */
 public class DefaultSkeletonFactory {
 	public static DetachableSkeleton createSkeleton(View view)
 	{

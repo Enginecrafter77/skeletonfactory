@@ -22,6 +22,18 @@ import android.os.Looper;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * <p>
+ *     RecyclerViewSkeleton is a {@link Skeleton} implementation forattaching {@link SkeletonAdapter} to a recyclerview
+ *     in accordance with the Skeleton behavior.
+ * </p>
+ *
+ * <p>
+ *     RecyclerViewSkeleton makes sure that when activating the skeleton, no state is lost. The original adapter is
+ *     still remembered, and upon hiding the skeleton the suppressed adapter is restored.
+ * </p>
+ * @author Enginecrafter77
+ */
 public class RecyclerViewSkeleton implements Skeleton {
 	private final RecyclerView view;
 	private final SkeletonAdapter skeletonAdapter;

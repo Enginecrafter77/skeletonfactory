@@ -25,17 +25,24 @@ public class SkeletonOverlay extends SkeletonDrawable implements DetachableSkele
 
 	private final View view;
 
+	private boolean installed;
+
 	public SkeletonOverlay(View view)
 	{
 		super();
 		this.view = view;
 		this.onLayoutChangeListener = this::onViewLayoutChange;
+		this.installed = false;
 	}
 
-	protected void install()
+	protected synchronized void install()
 	{
+		if(this.installed)
+			return;
+
 		this.view.getOverlay().add(this);
 		this.view.addOnLayoutChangeListener(this.onLayoutChangeListener);
+		this.installed = true;
 	}
 
 	@UiThread
@@ -45,9 +52,13 @@ public class SkeletonOverlay extends SkeletonDrawable implements DetachableSkele
 	}
 
 	@Override
-	public void detachSkeleton()
+	public synchronized void detachSkeleton()
 	{
+		if(!this.installed)
+			return;
+
 		this.view.getOverlay().remove(this);
 		this.view.removeOnLayoutChangeListener(this.onLayoutChangeListener);
+		this.installed = false;
 	}
 }

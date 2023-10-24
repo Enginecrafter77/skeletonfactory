@@ -17,6 +17,8 @@
 package dev.enginecrafter77.skeletonlayoutng;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -40,6 +42,7 @@ import androidx.annotation.Nullable;
  */
 public class SkeletonLayout extends FrameLayout implements Skeleton {
 	private final SkeletonDrawable skeletonDrawable;
+	private final Handler handler;
 
 	public SkeletonLayout(@NonNull Context context)
 	{
@@ -49,6 +52,7 @@ public class SkeletonLayout extends FrameLayout implements Skeleton {
 	public SkeletonLayout(@NonNull Context context, @Nullable AttributeSet attrs)
 	{
 		super(context, attrs);
+		this.handler = new Handler(Looper.getMainLooper());
 		this.skeletonDrawable = new SkeletonDrawable();
 		this.getOverlay().add(this.skeletonDrawable);
 
@@ -71,14 +75,18 @@ public class SkeletonLayout extends FrameLayout implements Skeleton {
 	@Override
 	public void showSkeleton()
 	{
-		ViewGroupChildIterator.asIterable(this).forEach((View view) -> view.setVisibility(View.INVISIBLE));
-		this.skeletonDrawable.showSkeleton();
+		this.handler.post(() -> {
+			ViewGroupChildIterator.asIterable(this).forEach((View view) -> view.setVisibility(View.INVISIBLE));
+			this.skeletonDrawable.showSkeleton();
+		});
 	}
 
 	@Override
 	public void hideSkeleton()
 	{
-		ViewGroupChildIterator.asIterable(this).forEach((View view) -> view.setVisibility(View.VISIBLE));
-		this.skeletonDrawable.hideSkeleton();
+		this.handler.post(() -> {
+			ViewGroupChildIterator.asIterable(this).forEach((View view) -> view.setVisibility(View.VISIBLE));
+			this.skeletonDrawable.hideSkeleton();
+		});
 	}
 }

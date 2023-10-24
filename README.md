@@ -1,6 +1,6 @@
-# SkeletonLayoutNG
+# SkeletonFactory
 
-SkeletonLayoutNG is a simple library for creating android skeletons inspired by [Faltenreich's SkeletonLayout library](https://github.com/Faltenreich/SkeletonLayout).
+SkeletonFactory is a simple library for creating android skeletons inspired by [Faltenreich's SkeletonLayout library](https://github.com/Faltenreich/SkeletonLayout).
 In contrast with Faltenreich's SkeletonLayout library, this library uses the ViewOverlay mechanism instead of strictly relying on view hierarchy.
 This allows displaying skeletons without touching the view hierarchies of some potentially very delicate layouts (such as ConstraintLayout).
 
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'dev.enginecrafter77.skeletonlayoutng:skeletonlayoutng:<version>'
+    implementation 'dev.enginecrafter77.skeletonfactory:skeletonfactory:<version>'
 }
 ```
 The version corresponds with git tags.
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 Additionally, to configure the skeletons, you can set the following attributes in your theme.
 ```xml
 <!-- Default values are shown here -->
-<style name="Theme.SkeletonLayoutNG" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+<style name="Theme.SkeletonFactory" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
     <item name="skeletonMaskColor">#E0E0E0</item>
     <item name="skeletonShimmerColor">#D5D5D5</item>
     <item name="skeletonShimmerAngle">5</item>

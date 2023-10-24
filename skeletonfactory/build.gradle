@@ -1,0 +1,111 @@
+plugins {
+    id 'com.android.library'
+    id 'com.github.hierynomus.license'
+    id 'fr.brouillard.oss.gradle.jgitver'
+    id 'maven-publish'
+}
+
+android {
+    namespace 'dev.enginecrafter77.skeletonfactory'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 18
+        targetSdk 34
+
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled true
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
+}
+
+jgitver {
+    nonQualifierBranches "main"
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'com.google.guava:guava:32.1.2-android'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+license {
+    header rootProject.file("license-header.txt")
+    include "**/*.java"
+    exclude "**/package-info.java"
+    strictCheck true
+
+    mapping {
+        java='SLASHSTAR_STYLE'
+    }
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'dev.enginecrafter77.skeletonfactory'
+            artifactId = 'skeletonfactory'
+            version = '0.0.0'
+
+            afterEvaluate {
+                version = project.version
+                from components.release
+            }
+        }
+        relocation(MavenPublication) {
+            pom {
+                groupId = 'dev.enginecrafter77.skeletonlayoutng'
+                artifactId = 'skeletonlayoutng'
+                version = '0.0.0'
+
+                distributionManagement {
+                    relocation {
+                        groupId = publishing.publications.release.groupId
+                        artifactId = publishing.publications.release.artifactId
+                        message = "Project rename 20231024"
+                    }
+                }
+
+                afterEvaluate {
+                    version = project.version
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'EC77Maven'
+            url = 'https://maven.enginecrafter77.dev/general'
+            credentials {
+                username System.getenv("EC77MAVEN_USERNAME") ?: ""
+                password System.getenv("EC77MAVEN_PASSWORD") ?: ""
+            }
+        }
+    }
+}

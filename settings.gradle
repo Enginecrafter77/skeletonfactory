@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "skeletonlayout-ng"
+rootProject.name = "skeletonfactory"
 include ':demo'
-include ':skeletonlayoutng'
+include ':skeletonfactory'

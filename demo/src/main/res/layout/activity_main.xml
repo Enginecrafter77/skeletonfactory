@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
-    <dev.enginecrafter77.skeletonlayoutng.SkeletonLayout
+    <dev.enginecrafter77.skeletonfactory.SkeletonLayout
         android:id="@+id/skeleton_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                 android:text="Wrapped text 2"
                 />
         </LinearLayout>
-    </dev.enginecrafter77.skeletonlayoutng.SkeletonLayout>
+    </dev.enginecrafter77.skeletonfactory.SkeletonLayout>
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/skeleton_switch"
         android:layout_width="wrap_content"

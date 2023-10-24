@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SkeletonLayoutNG">
         <activity
-            android:name="dev.enginecrafter77.skeletonlayoutng.MainActivity"
+            android:name="dev.enginecrafter77.skeletonfactory.MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

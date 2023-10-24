@@ -3,15 +3,17 @@ plugins {
 }
 
 android {
-    namespace 'dev.enginecrafter77.skeletonlayoutng.demo'
+    namespace 'dev.enginecrafter77.skeletonfactory.demo'
     compileSdk 34
 
     defaultConfig {
-        applicationId "dev.enginecrafter77.skeletonlayoutng.demo"
+        applicationId "dev.enginecrafter77.skeletonfactory.demo"
         minSdk 18
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -34,5 +36,5 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
-    implementation project(":skeletonlayoutng")
+    implementation project(":skeletonfactory")
 }
